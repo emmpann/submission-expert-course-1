@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">submission-expert-course-1</string>
+    <string name="title_favorite">Favorite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="text_subtitle">toy story 2</string>
+    <string name="something_wrong">Ooops.. something went wrong</string>
+</resources>
