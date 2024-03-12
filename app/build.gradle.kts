@@ -6,7 +6,7 @@ apply(from = "../shared_dependencies.gradle")
 
 android {
     namespace = "com.github.emmpann.submission_expert_course_1"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.github.emmpann.submission_expert_course_1"
