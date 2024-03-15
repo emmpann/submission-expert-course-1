@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/baseline_favorite_24"
+                android:contentDescription="@string/movie_detail_image_desc"
                 android:scaleType="centerCrop" />
 
             <com.google.android.material.appbar.MaterialToolbar

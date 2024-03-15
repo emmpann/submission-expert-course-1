@@ -22,10 +22,4 @@ class RemoteDataSource(private val apiService: ApiService) {
             Log.e("RemoteDataSource", e.toString())
         }
     }.flowOn(Dispatchers.IO)
-
-    companion object {
-        const val API_KEY = ""
-
-    }
 }
-

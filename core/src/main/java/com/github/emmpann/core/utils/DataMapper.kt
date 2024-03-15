@@ -31,7 +31,7 @@ object DataMapper {
                 title = it.title,
                 posterPath = it.posterPath,
                 backdropPath = it.backdropPath,
-                voteAverage = it.voteAverage.toString(),
+                voteAverage = it.voteAverage,
                 releaseDate = it.releaseDate,
                 isFavorite = it.isFavorite
             )

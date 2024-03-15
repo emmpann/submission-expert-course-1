@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.emmpann.core.domain.model.Movie
 import com.github.emmpann.core.ui.MovieAdapter
 import com.github.emmpann.favorite.databinding.ActivityFavoriteBinding
 import com.github.emmpann.submission_expert_course_1.detail.DetailActivity
@@ -24,14 +25,16 @@ class FavoriteActivity : AppCompatActivity() {
 
         loadKoinModules(movieFavoriteModule)
         val movieAdapter = MovieAdapter()
-        movieAdapter.onItemClick = { selectedData ->
-            val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.EXTRA_DATA, selectedData)
-            startActivity(intent)
-        }
+        movieAdapter.setOnClickCallback(object : MovieAdapter.OnClickCallback {
+            override fun onItemClick(item: Movie) {
+                val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_DATA, item)
+                startActivity(intent)
+            }
+        })
 
         favoriteViewModel.favoriteMovie.observe(this) { movie ->
-            movieAdapter.setData(movie)
+            movieAdapter.submitList(movie)
             binding.tvError.visibility =
                 if (movie.isNotEmpty()) View.GONE else View.VISIBLE
         }

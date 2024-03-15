@@ -3,33 +3,45 @@ package com.github.emmpann.core.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.emmpann.core.R
 import com.github.emmpann.core.databinding.MovieItemBinding
 import com.github.emmpann.core.domain.model.Movie
-import java.util.ArrayList
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
+class MovieAdapter : ListAdapter<Movie, MovieAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-    private var listData = ArrayList<Movie>()
-    var onItemClick: ((Movie) -> Unit)? = null
+    interface OnClickCallback {
+        fun onItemClick(item: Movie)
+    }
 
-    fun setData(newListData: List<Movie>?) {
-        if (newListData == null) return
-        listData.clear()
-        listData.addAll(newListData)
-        notifyDataSetChanged()
+    private lateinit var onItemClickCallback: OnClickCallback
+
+    fun setOnClickCallback(onItemClickCallback: OnClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false))
 
-    override fun getItemCount() = listData.size
-
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val data = listData[position]
+        val data = getItem(position)
         holder.bind(data)
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemClick(getItem(holder.adapterPosition)) }
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,12 +53,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
                     .into(ivMovie)
                 tvMovieTitle.text = data.title
                 tvMovieDesc.text = data.overview
-            }
-        }
-
-        init {
-            binding.root.setOnClickListener {
-                onItemClick?.invoke(listData[adapterPosition])
             }
         }
     }

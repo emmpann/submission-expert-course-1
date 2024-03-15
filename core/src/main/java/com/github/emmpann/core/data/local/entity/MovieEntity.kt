@@ -1,6 +1,5 @@
 package com.github.emmpann.core.data.local.entity
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,7 +8,6 @@ import androidx.room.PrimaryKey
 data class MovieEntity(
 
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "movieId")
     var movieId: Int,
 

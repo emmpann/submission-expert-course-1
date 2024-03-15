@@ -21,7 +21,8 @@
             android:src="@drawable/ic_star"
             app:layout_constraintBottom_toBottomOf="@+id/tv_rating"
             app:layout_constraintEnd_toStartOf="@+id/tv_rating"
-            app:layout_constraintTop_toTopOf="@+id/tv_rating" />
+            app:layout_constraintTop_toTopOf="@+id/tv_rating"
+            android:contentDescription="@string/rating_icon_desc" />
 
         <TextView
             android:id="@+id/tv_rating"

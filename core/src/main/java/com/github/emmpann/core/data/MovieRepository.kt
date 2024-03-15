@@ -15,7 +15,6 @@ class MovieRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
-
     ) : IMovieRepository {
     override fun getAllMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<MovieResponse>>() {
@@ -32,7 +31,7 @@ class MovieRepository(
                 localDataSource.insertMovie(movieList)
             }
 
-            override fun shouldFetch(data: List<Movie>?): Boolean = true
+            override fun shouldFetch(data: List<Movie>?): Boolean = data.isNullOrEmpty()
         }.asFlow()
 
 

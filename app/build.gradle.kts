@@ -6,7 +6,7 @@ apply(from = "../shared_dependencies.gradle")
 
 android {
     namespace = "com.github.emmpann.submission_expert_course_1"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.github.emmpann.submission_expert_course_1"
@@ -20,7 +20,15 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        debug {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -42,5 +50,5 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation (project(":core"))
+    implementation(project(":core"))
 }

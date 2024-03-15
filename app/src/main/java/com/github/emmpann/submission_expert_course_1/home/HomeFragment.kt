@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.emmpann.core.data.Resource
+import com.github.emmpann.core.domain.model.Movie
 import com.github.emmpann.core.ui.MovieAdapter
 import com.github.emmpann.submission_expert_course_1.R
 import com.github.emmpann.submission_expert_course_1.databinding.FragmentHomeBinding
@@ -23,7 +24,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,14 +33,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         if (activity != null) {
             val movieAdapter = MovieAdapter()
-            movieAdapter.onItemClick = { selectedData ->
-                val intent = Intent(activity, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_DATA, selectedData)
-                startActivity(intent)
-            }
+            movieAdapter.setOnClickCallback(object : MovieAdapter.OnClickCallback {
+                override fun onItemClick(item: Movie) {
+                    val intent = Intent(activity, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_DATA, item)
+                    startActivity(intent)
+                }
+            })
 
             homeViewModel.movie.observe(viewLifecycleOwner) { movie ->
                 if (movie != null) {
@@ -47,7 +49,7 @@ class HomeFragment : Fragment() {
                         is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                         is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            movieAdapter.setData(movie.data)
+                            movieAdapter.submitList(movie.data)
                         }
 
                         is Resource.Error -> {

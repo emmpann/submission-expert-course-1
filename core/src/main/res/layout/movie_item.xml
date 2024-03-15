@@ -50,7 +50,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/favorite_movie_image_list_desc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
